@@ -1,0 +1,63 @@
+# Configuration file for Climate Rainfall Analysis
+
+# Data settings
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  results_dir: "results"
+  
+# Model settings
+model:
+  target_column: "precipitation(mm)"
+  test_year: 2018
+  random_state: 42
+  
+  xgboost:
+    n_estimators: 500
+    max_depth: 6
+    learning_rate: 0.01
+    subsample: 0.8
+    colsample_bytree: 0.8
+  
+  random_forest:
+    n_estimators: 200
+    max_depth: 15
+    min_samples_split: 5
+    min_samples_leaf: 2
+  
+  linear:
+    alpha: 1.0
+
+# Feature engineering
+features:
+  temporal: true
+  lags: [1, 2, 3]
+  rolling_windows: [3, 5]
+  changes: true
+  interactions: true
+  regional: true
+
+# Data processing
+processing:
+  drop_duplicates: true
+  fill_method: "ffill"  # Options: ffill, bfill, mean, null
+  validate: true
+
+# Visualization
+visualization:
+  default_theme: "plotly_white"
+  color_scale: "Blues"
+  figure_width: 1200
+  figure_height: 600
+
+# API settings
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: false
+  
+# Dashboard settings
+dashboard:
+  port: 8501
+  default_year_range: [1991, 2023]
+  max_countries_display: 20
